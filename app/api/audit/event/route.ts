@@ -1,0 +1,3 @@
+import { NextRequest,NextResponse } from "next/server";import { z } from "zod";import { audit } from "@/lib/audit";
+const body=z.object({sessionId:z.string(),eventType:z.enum(["PRODUCT_SELECTED","UPSELL_SHOWN","UPSELL_ACCEPTED","UPSELL_REJECTED","APPROVAL_REQUESTED","CHECKOUT_DISMISSED","RETRY_REQUESTED"]),description:z.string(),metadata:z.record(z.string(),z.unknown()).optional()});
+export async function POST(r:NextRequest){try{const d=body.parse(await r.json());await audit(d.sessionId,d.eventType,d.description,true,undefined,d.metadata||{});return NextResponse.json({ok:true})}catch{return NextResponse.json({error:"Invalid audit event"},{status:400})}}

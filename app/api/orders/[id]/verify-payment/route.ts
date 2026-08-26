@@ -1,0 +1,3 @@
+import { NextRequest,NextResponse } from "next/server";import { z } from "zod";import { verifyPayment } from "@/lib/orders";
+const body=z.object({sessionId:z.string().min(1),razorpay_payment_id:z.string().min(1),razorpay_order_id:z.string().min(1),razorpay_signature:z.string().min(1)});
+export async function POST(r:NextRequest,{params}:{params:Promise<{id:string}>}){try{const d=body.parse(await r.json());const order=await verifyPayment((await params).id,d.sessionId,d);return NextResponse.json({order,verified:true});}catch{ return NextResponse.json({error:"Payment verification failed. No successful payment was recorded."},{status:400});}}

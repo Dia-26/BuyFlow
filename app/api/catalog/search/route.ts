@@ -1,0 +1,2 @@
+import { NextRequest,NextResponse } from "next/server";import { searchCatalog } from "@/lib/catalog";
+export async function GET(r:NextRequest){const q=r.nextUrl.searchParams;const products=await searchCatalog({query:q.get("query")||undefined,category:q.get("category")||undefined,brand:q.get("brand")||undefined,maxPrice:q.get("maxPrice")?Number(q.get("maxPrice")):undefined,stockOnly:q.get("stockOnly")!=="false"});return NextResponse.json({merchant:"Demo Merchant Catalog",dataStatus:"historical_demo",products});}

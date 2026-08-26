@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url = env("DATABASE_URL")
+}
+
+model Product {
+  id String @id @default(cuid())
+  sourceUniqueId String @unique
+  crawlTimestamp DateTime?
+  category String
+  normalizedCategory String
+  title String
+  normalizedTitle String
+  description String
+  brand String
+  normalizedBrand String
+  packSize String?
+  mrp Float
+  price Float
+  offers String?
+  stockAvailability String
+  stockStatus String
+  asin String?
+  imageUrls String?
+  sellerCount Int @default(0)
+  discountPercentage Float @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders Order[]
+  @@index([normalizedCategory, normalizedBrand, price])
+}
+model Order {
+  id String @id @default(cuid())
+  sessionId String
+  productId String
+  upsellProductId String?
+  upsellUnitPrice Float?
+  product Product @relation(fields:[productId], references:[id])
+  quantity Int @default(1)
+  unitPrice Float
+  totalAmount Float
+  currency String @default("INR")
+  status String @default("PENDING_APPROVAL")
+  idempotencyKey String @unique
+  razorpayOrderId String? @unique
+  razorpayPaymentId String? @unique
+  retryCount Int @default(0)
+  approvedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  audits AuditLog[]
+}
+model AuditLog {
+  id String @id @default(cuid())
+  timestamp DateTime @default(now())
+  eventType String
+  sessionId String
+  transactionId String?
+  order Order? @relation(fields:[transactionId], references:[id])
+  description String
+  metadata String
+  success Boolean
+  createdAt DateTime @default(now())
+  @@index([sessionId, timestamp])
+}
+model WebhookEvent {
+  id String @id @default(cuid())
+  eventId String @unique
+  eventType String
+  createdAt DateTime @default(now())
+}
