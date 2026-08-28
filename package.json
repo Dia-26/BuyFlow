@@ -11,6 +11,7 @@
     "import:data": "tsx scripts/import-data.ts",
     "db:push": "tsx scripts/db-push.ts && prisma generate",
     "db:seed": "tsx prisma/seed.ts"
+    ,"reset:activity": "tsx scripts/reset-activity.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.14.0",
