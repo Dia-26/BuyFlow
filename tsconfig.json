@@ -30,14 +30,22 @@
     ]
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".next-buyflow/types/**/*.ts",
-    ".next/types/**/*.ts",
+    ".next-buyflow-build/types/**/*.ts",
+    ".next-buyflow-runtime/types/**/*.ts",
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "lib/**/*.ts",
     "next-env.d.ts",
-    ".next-buyflow-runtime/types/**/*.ts"
+    "prisma/**/*.ts",
+    "scripts/**/*.ts",
+    "tests/**/*.ts",
+    ".next-buyflow-dev-v2/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    ".next/**",
+    ".next-buyflow/**",
+    ".next-buyflow-runtime/**",
+    ".next-buyflow-build/**"
   ]
 }
