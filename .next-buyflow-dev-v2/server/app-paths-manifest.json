@@ -1,7 +1,0 @@
-{
-  "/api/orders/[id]/approve/route": "app/api/orders/[id]/approve/route.js",
-  "/api/orders/[id]/pay/route": "app/api/orders/[id]/pay/route.js",
-  "/api/orders/[id]/checkout-opened/route": "app/api/orders/[id]/checkout-opened/route.js",
-  "/api/orders/[id]/verify-payment/route": "app/api/orders/[id]/verify-payment/route.js",
-  "/page": "app/page.js"
-}
